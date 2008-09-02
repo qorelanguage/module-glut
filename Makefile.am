@@ -3,6 +3,14 @@ AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = src
 
-noinst_HEADERS = src/qore-glut.h
+noinst_HEADERS = src/qore-glut.h src/GlutVoidPtrType.h
 
-EXTRA_DIST = ChangeLog AUTHORS README test/
+EXTRA_DIST = ChangeLog AUTHORS README \
+	test/atlantis.q \
+	test/gears2.q \
+	test/gears.q \
+	test/hanoi.q \
+	test/morph3d.q \
+	test/opengl-logo.q \
+	test/shadowtex.q \
+	qore-glut-module.spec
