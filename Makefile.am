@@ -5,7 +5,7 @@ SUBDIRS = src
 
 noinst_HEADERS = src/qore-glut.h src/GlutVoidPtrType.h
 
-EXTRA_DIST = ChangeLog AUTHORS README \
+EXTRA_DIST = COPYING ChangeLog AUTHORS README \
 	test/atlantis.q \
 	test/gears2.q \
 	test/gears.q \

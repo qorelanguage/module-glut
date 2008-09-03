@@ -10,6 +10,7 @@ glut_la_LDFLAGS = -module -avoid-version ${GLUT_LIBS}
 
 INCLUDES = -I$(top_srcdir)/include $(GLUT_INCLUDES)
 
+AM_CPPFLAGS = $(QORE_CPPFLAGS)
 AM_CXXFLAGS = ${PTHREAD_CFLAGS}
 
 if COND_PROFILE
