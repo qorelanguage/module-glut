@@ -478,7 +478,8 @@ sub myinit()
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 4);
 }
 
-sub keys($c, $x, $y)
+# renamed from "keys" due to keyword conflict in qore
+sub keyboard($c, $x, $y)
 {
     #printf("keys: c=%s x=%d y=%d\n", $c, $x, $y);
     if ($c == 0x1b)
@@ -502,7 +503,7 @@ sub main()
     myinit();
     glutReshapeFunc(\myReshape());
     glutDisplayFunc(\display());
-    glutKeyboardFunc(\keys());
+    glutKeyboardFunc(\keyboard());
     glutVisibilityFunc(\visibility());
     glutPostRedisplay();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
