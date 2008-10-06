@@ -1,0 +1,40 @@
+2008-10-03 07:24  david_nichols
+
+	* test/gears2.q: updated example to avoid use of keyword for
+	  function name
+
+2008-09-09 07:07  david_nichols
+
+	* qore-glut-module.spec: fixed license tag in spec file to be LGPL
+
+2008-09-03 12:11  david_nichols
+
+	* COPYING: updated license for modules to LGPL (*not* GPL)
+
+2008-09-03 08:48  david_nichols
+
+	* Makefile.am, configure.ac, m4, m4/acx_pthread.m4,
+	  qore-glut-module.spec, reconf.sh, src/Makefile.am: added pthread
+	  detection to configure, flags to build
+
+2008-09-02 14:41  david_nichols
+
+	* Makefile.am, configure.ac, qore-glut-module.spec: changed module
+	  directory to $libdir/qore-module-api-$(module_api_version),
+	  updated build and some docs
+
+2008-09-01 13:47  david_nichols
+
+	* test/atlantis.q, test/gears.q, test/gears2.q, test/hanoi.q,
+	  test/morph3d.q, test/opengl-logo.q, test/shadowtex.q: added test
+	  scripts
+
+2008-09-01 13:43  david_nichols
+
+	* ., AUTHORS, COPYING, ChangeLog, INSTALL, Makefile.am, NEWS,
+	  README, configure.ac, ltmain.sh, reconf.sh, src,
+	  src/GlutVoidPtrType.cc, src/GlutVoidPtrType.h, src/Makefile.am,
+	  src/glut-constants.cc, src/glut.cc, src/qore-glut.h,
+	  src/single-compilation-unit.cc, test: initial import as separate
+	  project
+
