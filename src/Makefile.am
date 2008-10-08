@@ -22,6 +22,6 @@ endif
 endif
 
 install-exec-hook:
-	mv $(libdir)/glut.$(MODULE_SUFFIX) $(libdir)/glut.qmod
-	rm -f $(libdir)/glut.la $(libdir)/glut.a
+	mv $(DESTDIR)$(libdir)/glut.$(MODULE_SUFFIX) $(DESTDIR)$(libdir)/glut.qmod
+	rm -f $(DESTDIR)$(libdir)/glut.la $(DESTDIR)$(libdir)/glut.a
 
