@@ -1,7 +1,7 @@
 glut module for Qore
-version 0.0.1 by David Nichols
+version 0.0.2 by David Nichols
 
-Requires qore 0.7.0 and glut (or freeglut) headers and libraries to build.
+Requires qore 0.7.1 and glut (or freeglut) headers and libraries to build.
 The module also requires the Qore opengl module to load and run.
 
 Documentation in docs/glut-module-doc.html (using TiddlyWiki)
