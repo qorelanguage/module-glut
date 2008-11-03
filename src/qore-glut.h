@@ -24,6 +24,10 @@
 
 #define _QORE_GLUT_H
 
+#include "../config.h"
+
+#include <qore/Qore.h>
+
 #include <glut.h>
 
 #include "GlutVoidPtrType.h"

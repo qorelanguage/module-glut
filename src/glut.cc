@@ -20,8 +20,6 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <qore/Qore.h>
-
 #include "qore-glut.h"
 
 #include <map>
@@ -32,7 +30,7 @@ static void glut_module_delete();
 
 #ifndef QORE_MONOLITHIC
 DLLEXPORT char qore_module_name[] = "glut";
-DLLEXPORT char qore_module_version[] = "0.1";
+DLLEXPORT char qore_module_version[] = PACKAGE_VERSION;
 DLLEXPORT char qore_module_description[] = "Glut module";
 DLLEXPORT char qore_module_author[] = "David Nichols";
 DLLEXPORT char qore_module_url[] = "http://qore.sourceforge.net";
