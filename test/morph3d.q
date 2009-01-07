@@ -720,7 +720,7 @@ sub main()
 
     $object=1;
 
-    glutInit();
+    glutInit(\$ARGV);
     glutInitWindowPosition(0,0);
     glutInitWindowSize(640,480);
 

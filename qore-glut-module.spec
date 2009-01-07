@@ -3,6 +3,10 @@
 
 %if 0%{?sles_version}
 
+%if 0%{?sles_version} == 11
+%define dist .sle11
+%endif
+
 %if 0%{?sles_version} == 10
 %define dist .sle10
 %endif
@@ -13,6 +17,10 @@
 
 %else
 %if 0%{?suse_version}
+
+%if 0%{?suse_version} == 1110
+%define dist .opensuse11_1
+%endif
 
 %if 0%{?suse_version} == 1100
 %define dist .opensuse11
@@ -43,7 +51,7 @@
 
 Summary: GLUT Module for Qore
 Name: qore-glut-module
-Version: 0.0.2
+Version: 0.0.3
 Release: 1%{dist}
 License: LGPL
 Group: Development/Languages
@@ -94,5 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING README RELEASE-NOTES ChangeLog AUTHORS
 
 %changelog
+* Tue Jan 6 2008 David Nichols <david_nichols@users.sourceforge.net>
+- updated version to 0.0.3
+
 * Tue Sep 2 2008 David Nichols <david_nichols@users.sourceforge.net>
 - initial spec file for separate glut release

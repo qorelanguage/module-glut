@@ -5263,7 +5263,7 @@ sub menuSelect($value)
 sub main()
 {
     glutInitWindowSize(500, 250);
-    glutInit();
+    glutInit(\$ARGV);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("GLUT Atlantis Demo");
     Init();

@@ -874,19 +874,91 @@ static AbstractQoreNode *f_glutJoystickFunc(const QoreListNode *params, Exceptio
 }
 
 //void glutForceJoystickFunc(void);
-static AbstractQoreNode *f_glutForceJoystickFunc(const QoreListNode *params, ExceptionSink *xsink)
-{
+static AbstractQoreNode *f_glutForceJoystickFunc(const QoreListNode *params, ExceptionSink *xsink) {
    glutForceJoystickFunc();
    return 0;
 }
 
+class GlutInitArgs {
+private:
+   const QoreListNode *l;
+   int argc, orig_argc;
+   const char **argv;
+   std::vector<QoreString *> strlist;
+
+public:
+   DLLLOCAL GlutInitArgs(const char *pgm, const QoreListNode *n_l) : l(n_l), argc(1) {
+      argv = (const char **)malloc(sizeof(const char *) * (l ? l->size() : 0 + 2));
+
+      // write program name
+      argv[0] = pgm ? pgm : "qore";
+
+      if (l) {
+	 ConstListIterator li(l);
+	 while (li.next()) {
+	    const AbstractQoreNode *n = li.getValue();
+	    QoreStringValueHelper str(n);
+	    argv[argc] = str->getBuffer();
+	    if (str.is_temp())
+	       strlist.push_back(str.giveString());
+	    ++argc;
+	 }
+      }
+
+      argv[argc] = 0;
+      orig_argc = argc;
+
+      glutInit(&argc, (char **)argv);
+   }
+
+   DLLLOCAL ~GlutInitArgs() {
+      for (int i = 0, e = strlist.size(); i < e; ++i)
+	 delete strlist[i];
+   }
+
+   DLLLOCAL int updateList(ReferenceHelper &ref, ExceptionSink *xsink) {
+      if (orig_argc == argc)
+	 return 0;
+
+      QoreListNode *nl = new QoreListNode();
+      for (int i = 1, e = argc; i < e; ++i)
+	 nl->push(argv[i] ? new QoreStringNode(argv[i]) : 0);
+
+      return ref.assign(nl, xsink);
+   }
+};
+
 //void glutInit(int *argcp, char **argv)
-static AbstractQoreNode *f_glutInit(const QoreListNode *params, ExceptionSink *xsink)
-{
-   // FIXME: process real arguments
-   static int argc = 1;
-   static char *argv[] = { "gears.q", 0 };
-   glutInit(&argc, argv);
+static AbstractQoreNode *f_glutInit(const QoreListNode *params, ExceptionSink *xsink) {
+   // first, get program name from second argument
+   const QoreStringNode *str = test_string_param(params, 1);
+   // get program name
+   const char *pgm = str ? str->getBuffer() : 0;
+
+   // get argument list
+   const QoreListNode *l;
+
+   const AbstractQoreNode *p = get_param(params, 0);
+   if (p && p->getType() == NT_REFERENCE) {
+      const ReferenceNode *r = reinterpret_cast<const ReferenceNode *>(p);
+      AutoVLock vl(xsink);
+      ReferenceHelper ref(r, vl, xsink);
+      // a deadlock exception occurred accessing the reference's value pointer
+      if (!ref)
+	 return 0;
+
+      // run against the list as a reference
+      if (ref.getType() == NT_LIST) {
+	 l = reinterpret_cast<const QoreListNode *>(ref.getValue());
+	 GlutInitArgs ga(pgm, l);
+	 ga.updateList(ref, xsink);
+	 return 0;
+      }
+   }
+   
+   l = p && p->getType() == NT_LIST ? reinterpret_cast<const QoreListNode *>(p) : 0;
+   GlutInitArgs ga(pgm, l);
+
    return 0;
 }
 

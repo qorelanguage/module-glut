@@ -277,7 +277,7 @@ sub visible($vis)
 
 sub main()
 {
-    glutInit();
+    glutInit(\$ARGV);
     $limit = int(shift $ARGV);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 

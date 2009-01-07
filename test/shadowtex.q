@@ -127,23 +127,20 @@ const step = 3.0;
 
 const borderColor = (1.0, 0.0, 0.0, 0.0);
 
-sub MAT4_MUL($dest_vec, $src_mat, $src_vec) 
-{
+sub MAT4_MUL($dest_vec, $src_mat, $src_vec) {
     return "DP4	" + $dest_vec + ".x, " + $src_mat + "[0], " + $src_vec + ";\n" 
 	"DP4	" + $dest_vec + ".y, " + $src_mat + "[1], " + $src_vec + ";\n" 
 	"DP4	" + $dest_vec + ".z, " + $src_mat + "[2], " + $src_vec + ";\n"
 	"DP4	" + $dest_vec + ".w, " + $src_mat + "[3], " + $src_vec + ";\n";
 }
 
-sub MAT3_MUL($dest_vec, $src_mat, $src_vec)
-{
+sub MAT3_MUL($dest_vec, $src_mat, $src_vec) {
     return "DP3	" + $dest_vec + ".x, " + $src_mat + "[0], " + $src_vec + ";\n"
 	"DP3	" + $dest_vec + ".y, " + $src_mat + "[1], " + $src_vec + ";\n"
 	"DP3	" + $dest_vec + ".z, " + $src_mat + "[2], " + $src_vec + ";\n";
 }
 
-sub NORMALIZE($dest, $src)
-{
+sub NORMALIZE($dest, $src) {
     return "DP3	" + $dest + ".w, " + $src + ", " + $src + ";\n"
 	"RSQ	" + $dest + ".w, " + $dest + ".w;\n"
 	"MUL	" + $dest + ", "  + $src + ", " + $dest + ".w;\n";
@@ -231,15 +228,13 @@ const tPlane = ( 0, 1, 0, 0 );
 const rPlane = ( 0, 0, 1, 0 );
 const qPlane = ( 0, 0, 0, 1 );
 
-sub assert($str)
-{
+sub assert($str) {
     stderr.vprintf("ASSERT: " + $str, $argv);
     stderr.printf("\n");
     exit(1);
 }
 
-sub DrawScene()
-{
+sub DrawScene() {
     my $k = 6.0;
 
     # sphere
@@ -250,14 +245,14 @@ sub DrawScene()
     glutSolidSphere(1.5, 15, 15);
     glPopMatrix();
     /* dodecahedron */
-	glPushMatrix();
+    glPushMatrix();
     glTranslatef(-2.0, 1.2, 2.1);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, Red);
     glColor4fv(Red);
     glutSolidDodecahedron();
     glPopMatrix();
     /* icosahedron */
-	glPushMatrix();
+    glPushMatrix();
     glTranslatef(-0.6, 1.3, -0.5);
     glScalef(1.5, 1.5, 1.5);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, Yellow);
@@ -265,7 +260,7 @@ sub DrawScene()
     glutSolidIcosahedron();
     glPopMatrix();
     /* a plane */
-	glPushMatrix();
+    glPushMatrix();
     glTranslatef(0, -1.1, 0);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, Blue);
     glColor4fv(Blue);
@@ -279,13 +274,11 @@ sub DrawScene()
     glPopMatrix();
 }
 
-
 # Calculate modelview and project matrices for the light
 # Stores the results in \c $lightProjection (projection matrix) and
 # \c $lightModelview (modelview matrix).
 
-sub MakeShadowMatrix($lightPos, $spotDir, $spotAngle, $shadowNear, $shadowFar)
-{
+sub MakeShadowMatrix($lightPos, $spotDir, $spotAngle, $shadowNear, $shadowFar) {
     # compute frustum to enclose spot light cone
     my $d = $shadowNear * tan($spotAngle);
 
@@ -308,11 +301,8 @@ sub MakeShadowMatrix($lightPos, $spotDir, $spotAngle, $shadowNear, $shadowFar)
     glPopMatrix();
 }
 
-
-
 # Load \c GL_TEXTURE matrix with light's MVP matrix.
-sub SetShadowTextureMatrix()
-{
+sub SetShadowTextureMatrix() {
     glMatrixMode(GL_TEXTURE);
     glLoadMatrixf(biasMatrix);
     glTranslatef(0.0, 0.0, $Bias);
@@ -321,8 +311,7 @@ sub SetShadowTextureMatrix()
     glMatrixMode(GL_MODELVIEW);
 }
 
-sub EnableIdentityTexgen()
-{
+sub EnableIdentityTexgen() {
     # texgen so that texcoord = vertex coord
     glTexGenfv(GL_S, GL_EYE_PLANE, sPlane);
     glTexGenfv(GL_T, GL_EYE_PLANE, tPlane);
@@ -339,13 +328,11 @@ sub EnableIdentityTexgen()
     glEnable(GL_TEXTURE_GEN_Q);
 }
 
-
 # * Setup 1-D texgen so that the distance from the light source, between
 # * the near and far planes maps to s=0 and s=1.  When we draw the scene,
 # * the grayness will indicate the fragment's distance from the light
 # * source.
-sub EnableDistanceTexgen($lightPos, $lightDir, $lightNear, $lightFar)
-{
+sub EnableDistanceTexgen($lightPos, $lightDir, $lightNear, $lightFar) {
     my ($m, $d);
     my $sPlane;
     my $nearPoint;
@@ -374,16 +361,14 @@ sub EnableDistanceTexgen($lightPos, $lightDir, $lightNear, $lightFar)
     glEnable(GL_TEXTURE_GEN_S);
 }
 
-sub DisableTexgen()
-{
+sub DisableTexgen() {
     glDisable(GL_TEXTURE_GEN_S);
     glDisable(GL_TEXTURE_GEN_T);
     glDisable(GL_TEXTURE_GEN_R);
     glDisable(GL_TEXTURE_GEN_Q);
 }
 
-sub ComputeLightPos($dist, $latitude, $longitude, $pos, $dir)
-{
+sub ComputeLightPos($dist, $latitude, $longitude, $pos, $dir) {
     $pos[0] = $dist * sin($longitude * DEG_TO_RAD);
     $pos[1] = $dist * sin($latitude * DEG_TO_RAD);
     $pos[2] = $dist * cos($latitude * DEG_TO_RAD) * cos($longitude * DEG_TO_RAD);
@@ -395,8 +380,7 @@ sub ComputeLightPos($dist, $latitude, $longitude, $pos, $dir)
 
 # * Render the shadow map / depth texture.
 # * The result will be in the texture object named $ShadowTexture.
-sub RenderShadowMap()
-{
+sub RenderShadowMap() {
     my $depthFormat; # GL_DEPTH_COMPONENT or GL_DEPTH_STENCIL_EXT
     my $depthType;   # GL_UNSIGNED_INT_24_8_EXT or GL_UNSIGNED_INT
 
@@ -489,8 +473,7 @@ sub RenderShadowMap()
 }
 
 # Show the shadow map as a grayscale image.
-sub ShowShadowMap()
-{
+sub ShowShadowMap() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glMatrixMode(GL_TEXTURE);
@@ -530,10 +513,8 @@ sub ShowShadowMap()
     glEnable(GL_LIGHTING);
 }
 
-
 # Redraw window image
-sub Display()
-{
+sub Display() {
     my $error;
 
     ComputeLightPos(LightDist, $LightLatitude, $LightLongitude, \$LightPos, \$SpotDir);
@@ -646,15 +627,13 @@ sub Display()
     }
 }
 
-sub Reshape($width, $height)
-{
+sub Reshape($width, $height) {
     $WindowWidth = $width;
     $WindowHeight = $height;
     $NeedNewShadowMap = GL_TRUE;
 }
 
-sub Idle()
-{
+sub Idle() {
     our $dt;
     our $t = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
     if ($t0 < 0.0)
@@ -666,8 +645,7 @@ sub Idle()
     glutPostRedisplay();
 }
 
-sub Key($key, $x, $y)
-{
+sub Key($key, $x, $y) {
     if ($key > 27)
 	$key = chr($key);
     switch ($key) {
@@ -760,8 +738,7 @@ sub Key($key, $x, $y)
     glutPostRedisplay();
 }
 
-sub SpecialKey($key, $x, $y)
-{
+sub SpecialKey($key, $x, $y) {
     my $mod = glutGetModifiers();
     switch ($key) {
 	case GLUT_KEY_UP:
@@ -795,18 +772,14 @@ sub SpecialKey($key, $x, $y)
     glutPostRedisplay();
 }
 
-
 # A helper for finding errors in program strings
-sub FindLine($program, $position)
-{
+sub FindLine($program, $position) {
     my $l = split("\n", substr($program, 0, $position));
     return elements $l;
 }
 
-
-sub compile_program($target, $code)
-{
-    my $errorPos;     #GLint errorPos;
+sub compile_program($target, $code) {
+    my $errorPos;
 
     my $p = glGenProgramsARB(1);
 
@@ -823,8 +796,7 @@ sub compile_program($target, $code)
     return $p;
 }
 
-sub Init()
-{
+sub Init() {
     if (!glutExtensionSupported("GL_ARB_depth_texture")) {
 	printf("Sorry, this demo requires the GL_ARB_depth_texture extension\n");
 	exit(1);
@@ -945,9 +917,7 @@ sub Init()
     glEnable(GL_LIGHT0);
 }
 
-
-sub PrintHelp()
-{
+sub PrintHelp() {
     printf("Keys:\n");
     printf("  a = toggle animation\n");
     printf("  i = show depth texture image\n");
@@ -965,9 +935,8 @@ sub PrintHelp()
 	printf("  o = cycle through comparison modes\n");
 }
 
-sub main()
-{
-    glutInit();
+sub main() {
+    glutInit(\$ARGV);
     glutInitWindowPosition(0, 0);
     glutInitWindowSize($WindowWidth, $WindowHeight);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL);

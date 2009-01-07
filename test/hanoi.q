@@ -311,7 +311,7 @@ sub main()
     my $p = new GetOpt(opts);
     my $o = $p.parse(\$ARGV);
 
-    glutInit();
+    glutInit(\$ARGV);
 
     if ($o.disks)
 	$NUM_DISKS = $o.disks;

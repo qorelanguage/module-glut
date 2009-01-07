@@ -717,7 +717,7 @@ sub SetCamera()
 
 sub main()
 {
-    glutInit();
+    glutInit(\$ARGV);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_RGB | GLUT_DOUBLE | GLUT_MULTISAMPLE);
     glutInitWindowPosition(200, 0);
     glutInitWindowSize(640, 480);

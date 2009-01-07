@@ -490,8 +490,7 @@ sub main()
 {
     my $mode = GLUT_DOUBLE;
 
-    #glutInit(&argc, argv);
-    glutInit($ARGV);
+    glutInit(\$ARGV);
 
     if (elements $ARGV > 1)
 	$mode = GLUT_SINGLE;
