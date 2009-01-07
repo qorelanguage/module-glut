@@ -5,6 +5,8 @@ SUBDIRS = src
 
 noinst_HEADERS = src/qore-glut.h src/GlutVoidPtrType.h
 
+ACLOCAL_AMFLAGS=-I m4
+
 EXTRA_DIST = COPYING ChangeLog AUTHORS README \
 	RELEASE-NOTES \
 	test/atlantis.q \
