@@ -88,7 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%{module_dir}/glut-api-%{module_api}.qmod
+%{module_dir}
 %doc COPYING README RELEASE-NOTES ChangeLog AUTHORS
 
 %changelog
