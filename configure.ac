@@ -486,7 +486,7 @@ if test "${with_glut}" != "no"; then
       	 fi
       	 with_glut=yes
       else
-	 AC_MSG_RESULT([not found])
+	 AC_MSG_ERROR([not found])
          unset with_glut
       fi
    fi

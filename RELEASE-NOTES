@@ -8,6 +8,7 @@ looking for dependent libraries
 updated glutInit() to accept a list or reference to a list to process command-
 line arguments
 
+made not finding the glut installation a fatal error in configure
 
 -------------
 Version 0.0.2
