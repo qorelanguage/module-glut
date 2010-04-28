@@ -77,7 +77,7 @@ sub mpop()
     shift $moves;
 }
 
-sub mpush(my $t, my $f)
+sub mpush($t, $f)
 {
     push $moves, ( "t" : $t, "f" : $f );
 }
@@ -245,7 +245,7 @@ sub hanoi_menu($value)
 	else {
 	    glEnable(GL_FOG);
 	    glFogi(GL_FOG_MODE, GL_EXP);
-	    glFogf(GL_FOG_DENSITY, .01);
+	    glFogf(GL_FOG_DENSITY, 0.01);
 	}
 	break;
     case HANOI_QUIT:
