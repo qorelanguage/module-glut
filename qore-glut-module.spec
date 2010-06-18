@@ -8,6 +8,10 @@
 %else
 %if 0%{?suse_version}
 
+%if 0%{?suse_version} == 1130
+%define dist .opensuse11_3
+%endif
+
 %if 0%{?suse_version} == 1120
 %define dist .opensuse11_2
 %endif
@@ -56,10 +60,17 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: /usr/bin/env
 Requires: qore-module-api-%{module_api}
 Requires: qore-opengl-module
-Requires: freeglut
 BuildRequires: gcc-c++
 BuildRequires: qore-devel
+%if 0%{?mdkversion}
+%ifarch x86_64 ppc64 x390x ia64
+BuildRequires: lib64mesaglut3-devel
+%else
+BuildRequires: libmesaglut3-devel
+%endif
+%else
 BuildRequires: freeglut-devel
+%endif
 BuildRequires: qore
 
 %description
@@ -73,7 +84,7 @@ functionality and therefore implement platform-independent OpenGL GUIs.
 
 %prep
 %setup -q
-%ifarch x86_64 ppc64 x390x
+%ifarch x86_64 ppc64 x390x ia64
 c64=--enable-64bit
 %endif
 ./configure RPM_OPT_FLAGS="$RPM_OPT_FLAGS" --prefix=/usr --disable-debug $c64
